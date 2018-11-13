@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: florida-deployment
+  labels:
+    app: florida
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: florida
+      role: test
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: florida
+        role: test
+        tier: backend
+    spec:
+      containers:
+      - name: floridapod
+        image: <your florida container image here>
+        ports:
+        - containerPort: 8080
