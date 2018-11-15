@@ -44,7 +44,7 @@ def get_florida_string():
         podip = item.status.pod_ip
         generatename = item.metadata.generate_name
         name = item.metadata.name
-        token = item.spec.containers[0].env[1].value
+        token = item.spec.containers[0].env[0].value
         token = token.replace("'", "")
         name = name.replace(generatename, "")
         rackname = "RACK" + name
