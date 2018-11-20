@@ -11,30 +11,9 @@ def rreplace(s, old, new, count):
 
 
 def get_florida_string():
-    # security token hardcoded for now.... todo I'll have to make this an environment variable later
-    aToken = <your kubernetes token here>
+    config.load_incluster_config()
 
-    # Create a configuration object
-    aConfiguration = client.Configuration()
-
-    # endpoint for kubes api... todo make this an environment variable again
-    aConfiguration.host = <your kubernetes api host here>
-
-    # Security part.
-
-    aConfiguration.verify_ssl = False
-    # if you want to do it you can with these 2 parameters this is probably a todo but I'm not doing it now, sorry :)
-    # configuration.verify_ssl=True
-    # ssl_ca_cert is the filepath to the file that contains the certificate.
-    # configuration.ssl_ca_cert="certificate"
-
-    aConfiguration.api_key = {"authorization": "Bearer " + aToken}
-
-    # Create a ApiClient with our config
-    aApiClient = client.ApiClient(aConfiguration)
-
-    # Do calls
-    v1 = client.CoreV1Api(aApiClient)
+    v1 = client.CoreV1Api()
 
     #this probably todo needs an environment variable for the pod selector
     podlist = v1.list_namespaced_pod("default", label_selector='app=dynomite,role=worker')
@@ -47,7 +26,7 @@ def get_florida_string():
         token = item.spec.containers[0].env[0].value
         token = token.replace("'", "")
         name = name.replace(generatename, "")
-        rackname = "RACK" + name
+        rackname = "us-east-" + name
         #most likely todo need a namespace for rack and search for labelled port?
         florida = podip.strip() + ":8101:" + rackname.strip() + ":dc1:" + token.strip()
         floridastring = floridastring + florida + "|"
