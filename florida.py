@@ -48,7 +48,7 @@ def get_conductor_string():
     for item in podlist.items:
         items = parse_item(item)
         # most likely todo need a namespace for rack and search for labelled port?
-        conductor = items[0].strip() + ":8102:" + items[1].strip()
+        conductor = items[0].strip() + ":8102:us-east-1b"
         #host1:8102:us-east-1c;
         conductorstring = conductorstring + conductor + ";"
 
