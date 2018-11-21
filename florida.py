@@ -20,13 +20,13 @@ def get_pod_list():
 def parse_item(item):
     podip = item.status.pod_ip
     generatename = item.metadata.generate_name
-    name = item.metadata.name
+    fullname = item.metadata.name
     token = item.spec.containers[0].env[0].value
     token = token.replace("'", "")
-    name = name.replace(generatename, "")
-    rackname = "us-east-" + name
+    name = fullname.replace(generatename, "")
+    rackname = "us-east-" + name + "a"
     # most likely todo need a namespace for rack and search for labelled port?
-    items = [podip, rackname, token]
+    items = [podip, rackname, token, fullname]
     return items
 
 
@@ -48,7 +48,7 @@ def get_conductor_string():
     for item in podlist.items:
         items = parse_item(item)
         # most likely todo need a namespace for rack and search for labelled port?
-        conductor = items[0].strip() + ":8102:us-east-1b"
+        conductor = items[0].strip() + ":8102:" + items[3].strip()
         #host1:8102:us-east-1c;
         conductorstring = conductorstring + conductor + ";"
 
