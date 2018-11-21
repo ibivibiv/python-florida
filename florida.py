@@ -18,13 +18,15 @@ def get_pod_list():
     return v1.list_namespaced_pod("default", label_selector='app=dynomite,role=worker')
 
 def parse_item(item):
+    alpha = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t']
     podip = item.status.pod_ip
     generatename = item.metadata.generate_name
     fullname = item.metadata.name
     token = item.spec.containers[0].env[0].value
     token = token.replace("'", "")
     name = fullname.replace(generatename, "")
-    rackname = "us-east-" + name + "a"
+    number = int(name)
+    rackname = "us-east-1" + alpha[number]
     # most likely todo need a namespace for rack and search for labelled port?
     items = [podip, rackname, token, fullname]
     return items
