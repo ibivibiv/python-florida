@@ -14,6 +14,7 @@ RUN pip install flask kubernetes
 
 #get florida python
 RUN wget https://raw.githubusercontent.com/ibivibiv/python-florida/master/florida.py
+RUN wget https://raw.githubusercontent.com/ibivibiv/python-florida/master/config.properties
 
 
 # get the environment command setup
