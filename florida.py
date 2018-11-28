@@ -27,9 +27,9 @@ def parse_item(item):
     token = token.replace("'", "")
     name = fullname.replace(generatename, "")
     number = int(name)
-    rackname = "us-east-1" + alpha[number]
+    rackname = generatename[:-1] + alpha[number]
     # most likely todo need a namespace for rack and search for labelled port?
-    items = [podip, rackname, token, fullname, generatename]
+    items = [podip, rackname, token, fullname, generatename[:-1]]
     return items
 
 
