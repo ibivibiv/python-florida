@@ -18,7 +18,8 @@ def get_pod_list():
     return v1.list_namespaced_pod("default", label_selector='app=dynomite,role=worker')
 
 def parse_item(item):
-    alpha = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t']
+    #this is very weird but conductor fails when you have more than 4 racks per dc?
+    alpha = ['a','b','c','d']
     podip = item.status.pod_ip
     generatename = item.metadata.generate_name
     fullname = item.metadata.name
@@ -28,7 +29,7 @@ def parse_item(item):
     number = int(name)
     rackname = "us-east-1" + alpha[number]
     # most likely todo need a namespace for rack and search for labelled port?
-    items = [podip, rackname, token, fullname]
+    items = [podip, rackname, token, fullname, generatename]
     return items
 
 
@@ -37,7 +38,7 @@ def get_florida_string():
     floridastring = ""
     for item in podlist.items:
         items = parse_item(item)
-        florida = items[0].strip() + ":8101:" + items[1].strip() + ":dc1:" + items[2].strip()
+        florida = items[0].strip() + ":8101:" + items[1].strip() + ":"+ items[4].strip() +":" + items[2].strip()
         floridastring = floridastring + florida + "|"
 
     floridastring = rreplace(floridastring, "|", "", 1)
