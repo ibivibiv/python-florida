@@ -48,12 +48,12 @@ def get_conductor_string():
     podlist = get_pod_list()
     conductorstring = ""
     filestring = ""
-    set = list.items
+    set = podlist.items
 
     set = random.shuffle(set)
 
     i = 0
-    for item in podlist.items:
+    for item in set:
         i += 1
         #conductor doesn't like to connect to more than 4 dynomite nodes so we protect it here and only give it 4 randoms
         if i > 3 :
