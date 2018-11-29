@@ -1,7 +1,7 @@
-from flask import Flask, url_for
+from flask import Flask
 import os
 from kubernetes import client, config
-from pprint import pprint
+import random
 
 app = Flask(__name__)
 
@@ -48,7 +48,16 @@ def get_conductor_string():
     podlist = get_pod_list()
     conductorstring = ""
     filestring = ""
+    set = list.items
+
+    set = random.shuffle(set)
+
+    i = 0
     for item in podlist.items:
+        i += 1
+        #conductor doesn't like to connect to more than 4 dynomite nodes so we protect it here and only give it 4 randoms
+        if i > 3 :
+            break
         items = parse_item(item)
         # most likely todo need a namespace for rack and search for labelled port?
         conductor = items[3].strip() + ":8102:" + items[1].strip()
