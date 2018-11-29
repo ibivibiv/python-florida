@@ -56,7 +56,7 @@ def get_conductor_string():
     for item in items:
         i += 1
         #conductor doesn't like to connect to more than 4 dynomite nodes so we protect it here and only give it 4 randoms
-        if i > 3 :
+        if i > 4 :
             break
         items = parse_item(item)
         # most likely todo need a namespace for rack and search for labelled port?
