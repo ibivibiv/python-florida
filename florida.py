@@ -15,7 +15,8 @@ def get_pod_list():
     v1 = client.CoreV1Api()
 
     # this probably todo needs an environment variable for the pod selector
-    return v1.list_namespaced_pod("default", label_selector='app=dynomite,role=worker')
+    list = v1.list_namespaced_pod("default", label_selector='app=dynomite,role=worker')
+    return list.items
 
 def parse_item(item):
     #this is very weird but conductor fails when you have more than 4 racks per dc?
@@ -34,9 +35,9 @@ def parse_item(item):
 
 
 def get_florida_string():
-    podlist = get_pod_list()
+    items = get_pod_list()
     floridastring = ""
-    for item in podlist.items:
+    for item in items:
         items = parse_item(item)
         florida = items[0].strip() + ":8101:" + items[1].strip() + ":"+ items[4].strip() +":" + items[2].strip()
         floridastring = floridastring + florida + "|"
@@ -45,15 +46,14 @@ def get_florida_string():
     return floridastring
 
 def get_conductor_string():
-    podlist = get_pod_list()
+    items = get_pod_list()
     conductorstring = ""
     filestring = ""
-    set = podlist.items
 
-    set = random.shuffle(set)
+    random.shuffle(items)
 
     i = 0
-    for item in set:
+    for item in items:
         i += 1
         #conductor doesn't like to connect to more than 4 dynomite nodes so we protect it here and only give it 4 randoms
         if i > 3 :
