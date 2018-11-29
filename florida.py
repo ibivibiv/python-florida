@@ -19,7 +19,7 @@ def get_pod_list():
 
 def parse_item(item):
     #this is very weird but conductor fails when you have more than 4 racks per dc?
-    alpha = ['a','b','c','d']
+    alpha = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z']
     podip = item.status.pod_ip
     generatename = item.metadata.generate_name
     fullname = item.metadata.name
