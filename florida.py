@@ -24,7 +24,7 @@ def parse_item(item):
     podip = item.status.pod_ip
     generatename = item.metadata.generate_name
     fullname = item.metadata.name
-    token = item.spec.containers[0].env[0].value
+    token = item.spec.containers[1].env[0].value
     token = token.replace("'", "")
     name = fullname.replace(generatename, "")
     number = int(name)
