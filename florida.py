@@ -52,17 +52,14 @@ def get_conductor_string():
 
     random.shuffle(items)
 
-    i = 0
+   
     for item in items:
-        i += 1
-        #conductor doesn't like to connect to more than 4 dynomite nodes so we protect it here and only give it 4 randoms
-        if i > 4 :
-            break
         items = parse_item(item)
         # most likely todo need a namespace for rack and search for labelled port?
         conductor = items[3].strip() + ":8102:" + items[1].strip()
         #host1:8102:us-east-1c;
         conductorstring = conductorstring + conductor + ";"
+        
 
     conductorstring = rreplace(conductorstring, ";", "", 1)
 
