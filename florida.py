@@ -11,7 +11,7 @@ def rreplace(s, old, new, count):
 
 def get_pod_list():
     
-    config.load_kube_config('./config')
+    config.load_kube_config('/config')
     v1 = client.CoreV1Api()
 
     # this probably todo needs an environment variable for the pod selector
