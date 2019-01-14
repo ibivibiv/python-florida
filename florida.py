@@ -15,7 +15,7 @@ def get_pod_list():
     v1 = client.CoreV1Api()
 
     # this probably todo needs an environment variable for the pod selector
-    list = v1.list_namespaced_pod("exodus-conductor", label_selector='app=dynomite,role=worker')
+    list = v1.list_namespaced_pod("default", label_selector='app=dynomite,role=worker')
     return list.items
 
 def parse_item(item):
