@@ -2,6 +2,7 @@ from flask import Flask
 import os
 from kubernetes import client, config
 import random
+import requests
 
 app = Flask(__name__)
 
