@@ -92,7 +92,7 @@ def conductor():
     return get_conductor_string()
 
 @app.route('/REST/v1/admin/check_dynomite')
-def conductor():
+def dynomite():
     return check_dynomite()
 
 if __name__ == '__main__':
