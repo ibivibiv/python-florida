@@ -33,6 +33,19 @@ def parse_item(item):
     items = [podip, rackname, token, fullname, generatename[:-1]]
     return items
 
+def check_dynomite():
+    items = get_pod_list()
+    floridastring = ""
+    for item in items:
+        items = parse_item(item)
+        ip = items[0].strip()
+        url = "http://"+ip+":22222/info"
+        r = requests.get(url)
+        if(r.status_code == 200) :
+            return "ok"
+
+    raise Exception('No Dynomite Nodes Resonding')
+
 
 def get_florida_string():
     items = get_pod_list()
@@ -77,6 +90,10 @@ def florida():
 @app.route('/REST/v1/admin/config.properties')
 def conductor():
     return get_conductor_string()
+
+@app.route('/REST/v1/admin/check_dynomite')
+def conductor():
+    return check_dynomite()
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8080))
