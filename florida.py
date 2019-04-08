@@ -14,9 +14,11 @@ def get_pod_list():
     
     config.load_incluster_config()
     v1 = client.CoreV1Api()
+    
+    namespace = os.environ.get('NAMESPACE')
 
     # this probably todo needs an environment variable for the pod selector
-    list = v1.list_namespaced_pod("default", label_selector='app=dynomite,role=worker')
+    list = v1.list_namespaced_pod(namespace, label_selector='app=dynomite,role=worker')
     return list.items
 
 def parse_item(item):
