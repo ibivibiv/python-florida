@@ -13,7 +13,8 @@ def rreplace(s, old, new, count):
 def get_pod_list():
     
     config.load_incluster_config()
-    v1 = client.CoreV1Api()
+    config.assert_hostname = False
+    v1 = client.CoreV1Api(config)
     
     namespace = os.environ.get('NAMESPACE')
 
