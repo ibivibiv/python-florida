@@ -12,7 +12,7 @@ def rreplace(s, old, new, count):
 
 def get_pod_list():
     
-    config.load_incluster_config()
+    config.load_kube_config(config_file="./config")
     
     v1 = client.CoreV1Api()
     
